@@ -1,7 +1,7 @@
 sandbox
 =======
 
-Just playin' with various programming languages and ideas
+Just playin' with some various programming languages and ideas
 
   * school work
   * testing

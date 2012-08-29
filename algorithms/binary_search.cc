@@ -42,6 +42,18 @@ class BinarySearch
         return -1; // element not found
     }
 
+    // removes a specified element from list
+    void remove(int p)
+    {
+        // move every element above p one step down
+        for( int i = p; i < this->len; i++)
+        {
+            this->l[i] = this->l[i+1];
+        }
+        // decrease total length by 1
+        this->len = this->len -1;
+    }
+
   public:
 
     // list feeeeeder 
@@ -54,24 +66,19 @@ class BinarySearch
     // if the provided key v exists in the list, pop it baby!
     bool pop(int k)
     {
-        int p = this->bs(k, 0, this->len-1); // stores key position
-        if( p == -1 )
+        int p = this->bs(k, 0, this->len); // key position
+        if( p != -1 )
         {
-            return false; // couldn't find the moth* f*ckr
+            this->remove(p);
+            return true; // done deal
         }
-        // move every element above p one step down
-        for( int i = p; i < this->len; i++)
-        {
-            this->l[i] = this->l[i+1];
-        }
-        this->len = this->len -1;
-        return true; // done deal
+        return false; // couldn't find the moth* f*ckr
     }
 
     // plain search for a specific key
     bool search(int k)
     {
-        return this->bs(k, 0, this->len-1) != -1;
+        return this->bs(k, 0, this->len) != -1;
     }
 
 };
@@ -82,16 +89,16 @@ int main()
 {
     cout << "testing this shit.." << endl << endl;
 
-    int list[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    int list[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
                   17, 18, 19, 20};
     int length = sizeof(list) / sizeof(int);
     BinarySearch bs = BinarySearch();
     bs.set(list, length);
      
     int v = 3;
-    cout << "Checking if <<" << v << ">> exists in list; " << bs.search(v) << endl;
+    cout << "Checking if <<" << v << ">> exists in list; " << bs.pop(v) << endl;
 
-    v = 19;
+    v = 20;
     cout << "Checking if <<" << v << ">> exists in list; " << bs.search(v) << endl;
 
     return 0;

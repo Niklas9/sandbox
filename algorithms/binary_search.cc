@@ -51,14 +51,20 @@ class BinarySearch
         this->len = len;
     }
 
-    // if the provided value v exists in the array, pop it from the list
+    // if the provided key v exists in the list, pop it baby!
     bool pop(int k)
     {
-        if( !this->search(k) )
+        int p = this->bs(k, 0, this->len-1); // stores key position
+        if( p == -1 )
         {
-            return false; // couldn't find the moth* f*kr
+            return false; // couldn't find the moth* f*ckr
         }
-        
+        // move every element above p one step down
+        for( int i = p; i < this->len; i++)
+        {
+            this->l[i] = this->l[i+1];
+        }
+        this->len = this->len -1;
         return true; // done deal
     }
 

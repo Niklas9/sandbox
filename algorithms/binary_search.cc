@@ -3,9 +3,12 @@
 // File: binary_search.cc
 // Date: 2012-08-29
 //
-// Description: C++ implementation of the binary search algorithm, it's
-// up to the client to sort the provided list of integers in a
-// efficient manner
+// Description: C++ implementation of the binary search algorithm, recursive 
+//              It's up to the client to sort the provided list of integers
+//              in an efficient manner
+//
+// Time complexity: O(log n)
+// Space complexity: O(1)
 //-----------------------------------------------------------------------------
 
 #include <iostream>
@@ -15,83 +18,75 @@ using namespace std;
 class BinarySearch
 {
   private:
+
     int *l;  // list array
-    int l_len;  // length of list array
+    int len;  // length of list array
 
-    // this is where the real magic happens
-    bool bs(int v, int n)
+    // this is where the real magic happens,
+    // returns the element position of the array, -1 if it doesn't exist
+    int bs(int k, int start, int stop)
     {
-        cout << n << endl;
-        if( n > (this->l_len-1))
+        if(start < stop)
         {
-            // upper bound reached, no no here 
-            return false;
+            int mid = start + (stop - start) / 2;
+            if(k < this->l[mid])
+            {
+                return this->bs(k, start, mid);
+            }
+            else if(k > this->l[mid])
+            {
+                return this->bs(k, mid+1, stop);
+            }
+            return mid; // yay!! return the element position
         }
-        if(this->l[n] == v)
-        {
-            // win!!
-            return true;
-        }
-        if(n == 0)
-        {
-            // lower bound reached, value is hiding somewhere else..
-            return false;
-        }
-        else if(this->l[n] < v)
-        {
-            n = n + n/2;
-        }
-        else if(this->l[n] > v)
-        {
-            n = n/2;
-        }
-        return this->bs(v, n);
-
+        return -1; // element not found
     }
 
   public:
-    ~BinarySearch()
+
+    // list feeeeeder 
+    void set(int *l, int len)
     {
-        // need to delete this reference ??! freaks f** out
-        //delete this->l;
+        this->l = l;
+        this->len = len;
     }
-    void set_list(int *list, int list_len)
-    {
-        this->l = list;
-        this->l_len = list_len;
-    }
+
     // if the provided value v exists in the array, pop it from the list
-    // and return it, returns -1 if it doesn't exist
-    int pop(int v)
+    bool pop(int k)
     {
-        if( !this->search(v) )
+        if( !this->search(k) )
         {
-            return -1; // not possible, -1 should be a valid value in list
+            return false; // couldn't find the moth* f*kr
         }
-
-        return v;
+        
+        return true; // done deal
     }
 
-    bool search(int v)
+    // plain search for a specific key
+    bool search(int k)
     {
-        return this->bs(v, this->l_len/2);
+        return this->bs(k, 0, this->len-1) != -1;
     }
 
 };
+
 
 // do some magic self-tests..
 int main()
 {
     cout << "testing this shit.." << endl << endl;
 
-    int list_len = 20;
-    int list[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+    int list[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
                   17, 18, 19, 20};
+    int length = sizeof(list) / sizeof(int);
     BinarySearch bs = BinarySearch();
-    bs.set_list(list, list_len);
-    
-    int v = 12;
-    cout << "Checking if " << v << " exists in list: " << bs.search(v) << endl;
+    bs.set(list, length);
+     
+    int v = 3;
+    cout << "Checking if <<" << v << ">> exists in list; " << bs.search(v) << endl;
+
+    v = 19;
+    cout << "Checking if <<" << v << ">> exists in list; " << bs.search(v) << endl;
 
     return 0;
 }

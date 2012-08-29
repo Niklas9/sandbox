@@ -39,7 +39,6 @@ class Heap
     // debug printer of the whole heap stack
     void dprint()
     {
-        cout << "\n=============================================\n";
         cout << "{";
         for(int i = 0; i < this->length(); i++)
         {
@@ -50,7 +49,6 @@ class Heap
             }
         }
         cout << "}\n";
-        cout << "=============================================\n\n";
     }
 
     int pop()
@@ -70,7 +68,6 @@ class Heap
                 this->heap[i] = v;
             }
         }
-        this->heap[0] = v;
         return true; // false if not successful
     }
 

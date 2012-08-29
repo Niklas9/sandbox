@@ -46,7 +46,7 @@ class BinarySearch
     void remove(int p)
     {
         // move every element above p one step down
-        for( int i = p; i < this->len; i++)
+        for(int i = p; i < this->len; i++)
         {
             this->l[i] = this->l[i+1];
         }

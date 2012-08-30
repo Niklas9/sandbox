@@ -87,6 +87,11 @@ class BinarySearch
 };
 
 
+// TODO(nandersson):
+// * do testing in parallel
+// * add more tests for popping, start popping from random location and
+//   try popping everything in list
+
 // do some magic self-tests..
 // -- should try some unit test framework instead some day
 unsigned int get_rand_int(int low, int high)

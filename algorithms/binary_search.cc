@@ -12,6 +12,9 @@
 //-----------------------------------------------------------------------------
 
 #include <iostream>
+#include <cassert>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -51,7 +54,7 @@ class BinarySearch
             this->l[i] = this->l[i+1];
         }
         // decrease total length by 1
-        this->len = this->len -1;
+        this->len -= 1;
     }
 
   public:
@@ -67,7 +70,7 @@ class BinarySearch
     bool pop(int k)
     {
         int p = this->bs(k, 0, this->len); // key position
-        if( p != -1 )
+        if(p != -1)
         {
             this->remove(p);
             return true; // done deal
@@ -85,21 +88,61 @@ class BinarySearch
 
 
 // do some magic self-tests..
+// -- should try some unit test framework instead some day
+unsigned int get_rand_int(int low, int high)
+{
+    return (rand() % (high - low +1)) + low;
+}
+
+int *random_list(int size)
+{
+    int start = get_rand_int(-10000, 10000);
+    int diff = 0;
+    int *list = new int[size];
+    for(int i = 0; i < size; i++)
+    {
+        list[i] = start + diff;
+        start = list[i];
+        diff = get_rand_int(-999, 999);
+        if(diff < 0)
+        {
+            diff = -diff; // make sure it's sorted
+        }
+        if(diff == 0)
+        {
+            diff += 1; // can end up with non-unique values if not
+        }
+    }
+    return list;
+}
+
 int main()
 {
-    cout << "testing this shit.." << endl << endl;
-
-    int list[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
-                  17, 18, 19, 20};
-    int length = sizeof(list) / sizeof(int);
+    cout << "testing this shit.." << endl;
+ 
+    int test_times = 1000000;
     BinarySearch bs = BinarySearch();
-    bs.set(list, length);
-     
-    int v = 3;
-    cout << "Checking if <<" << v << ">> exists in list; " << bs.pop(v) << endl;
-
-    v = 20;
-    cout << "Checking if <<" << v << ">> exists in list; " << bs.search(v) << endl;
+    //assert(bs.search(v)==false);
+    srand(time(0));
+ 
+    for(int i = 0; i < test_times; i++)
+    {
+        int len = get_rand_int(1, 100);
+        int *list = random_list(len);
+        bs.set(list, len);
+        // test searching
+        for(int j = 0; j < len; j++)
+        {
+            assert(bs.search(list[j])==true);
+        }
+         
+        // test searching for invalid values
+        assert(bs.search(list[len-1]+1)==false);
+        // test popping
+        int v = list[len/2];
+        assert(bs.pop(v)==true); // pop it
+        assert(bs.search(v)==false); // make sure it's not there
+    }
 
     return 0;
 }

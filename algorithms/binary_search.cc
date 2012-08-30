@@ -3,9 +3,9 @@
 // File: binary_search.cc
 // Date: 2012-08-29
 //
-// Description: C++ implementation of the binary search algorithm, recursive 
-//              It's up to the client to sort the provided list of integers
-//              in an efficient manner
+// Description: C++ implementation of the binary search algorithm (recursive)
+// Requirements: 1. The provided list must be sorted
+//               2. It must only contain unique values
 //
 // Time complexity: O(log n)
 // Space complexity: O(1)

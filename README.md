@@ -1,8 +1,8 @@
 sandbox
 =======
 
-Just playin' with some various programming languages and ideas
+Just playin' with some various programming languages, systems and ideas
 
   * school work
   * testing
-  * stuff to help friends
+  * collaboration with friends

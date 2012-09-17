@@ -4,7 +4,7 @@
 // Date: 2012-09-17
 //
 // Description: tested and implemented some ideas Richard Buckland
-// shared in his brilliant introductory lecture to Dynamic Porgramming,
+// shared in his brilliant introductory lecture to Dynamic Programming,
 // http://www.youtube.com/watch?v=w0SiN5bWFOc
 //-----------------------------------------------------------------------------
 
